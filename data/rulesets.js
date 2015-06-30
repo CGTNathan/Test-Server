@@ -373,7 +373,7 @@ exports.BattleFormats = {
 					moves.push(set.moves[i]);
 				}
 			}
-			set.moves = moves;
+			set.moves = moves,
 
 			if (template.isMega) {
 				// Mega evolutions evolve in-battle
