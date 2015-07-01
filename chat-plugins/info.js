@@ -734,7 +734,7 @@ var commands = exports.commands = {
 				buffer += '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + pokeName + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b>' + pokeType + '<br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpA + ' / SpD ' + pokeSpD + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b>' + pokeColor + '<br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>';
 			}
 		}
-		this.sendReply(buffer);
+		this.sendReplyBox(buffer);
 	},
 	randompokemonhelp: ["/randompokemon - Generates random Pokemon based on given search conditions.",
 		"/randompokemon uses the same parameters as /dexsearch (see '/help ds').",
