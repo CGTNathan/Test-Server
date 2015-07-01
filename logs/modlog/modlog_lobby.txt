@@ -15,3 +15,5 @@
 [2015-07-01T17:19:01.015Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
 [2015-07-01T17:19:45.007Z] (lobby) (Mr. CGTNathan forcibly ended a tournament.)
 [2015-07-01T17:19:52.345Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T18:12:07.885Z] (lobby) (Mr. CGTNathan forcibly ended a tournament.)
+[2015-07-01T18:18:43.135Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
