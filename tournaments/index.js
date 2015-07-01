@@ -47,6 +47,7 @@ function createTournament(room, format, generator, playerCap, isRated, args, out
 		tournament.playerCap = 16
 		this.sendReply('The tournament size has been defaulted to 16. To change it, type "/tour size [#]".')
 	}
+	}
 	if (!TournamentGenerators[toId(generator)]) {
 		output.sendReply(generator + " is not a valid type.");
 		output.sendReply("Valid types: " + Object.keys(TournamentGenerators).join(", "));
