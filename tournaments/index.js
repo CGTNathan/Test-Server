@@ -758,13 +758,11 @@ var commands = {
 					this.sendReply("You cannot have a player cap that is less than 2.");
 					return;
 				} else {
-					for (var n = 1; n <= 6; n++) {
-						if (params && params === 2 || params && params === 4 || params && params === 8 || params && params === 16 || params && params === 32 || params && params === 64) {
-							this.sendReply('C&E Tier requires the player cap to be a power of 2!');	
-						} else {
-							tournament.playerCap = params;
-							this.room.send('The tournament size has been set to ' + params + '.');
-						}
+					if (params && params === 2 || params && params === 4 || params && params === 8 || params && params === 16 || params && params === 32 || params && params === 64) {
+						this.sendReply('C&E Tier requires the player cap to be a power of 2!');	
+					} else {
+						tournament.playerCap = params;
+						this.room.send('The tournament size has been set to ' + params + '.');
 					}
 				}
 			} else if (params && params < 2) {
