@@ -135,6 +135,16 @@ Tournament = (function () {
 		return true;
 	};
 
+	Tournament.prototype.size = function (playerCap) {
+		if (playerCap && playerCap < 2) {
+			output.sendReply("You cannot have a player cap that is less than 2.");
+			return;
+		} else {
+		this.playerCap = playerCap;
+		this.room.send('The tournament size has been set to ' + playerCap + '.')
+		}
+	};
+	
 	Tournament.prototype.forceEnd = function () {
 		if (this.isTournamentStarted) {
 			this.inProgressMatches.forEach(function (match) {
