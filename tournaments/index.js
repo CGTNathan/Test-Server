@@ -757,13 +757,12 @@ var commands = {
 				this.sendReply("You cannot have a player cap that is less than 2.");
 				return;
 			} else if (tournament.format === 'ce') {
-				if (params === 2 || 4 || 8 || 16 || 32 ||64) {
+				if (params === 2 || 4 || 8 || 16 || 32 || 64) {
 					tournament.playerCap = params;
 					this.room.send('The tournament size has been set to ' + params + '.');
 				} else {
 					this.sendReply('C&E Tier requires the player cap to be a power of 2!');
 				}
-			
 			} else {
 			tournament.playerCap = params;
 			this.room.send('The tournament size has been set to ' + params + '.')
