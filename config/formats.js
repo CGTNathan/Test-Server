@@ -371,8 +371,8 @@ exports.Formats = [
 		name: "Mega Tier",
 		section: "Other Metagames",
 
-		ruleset: ['Megatier', 'Team Preview', 'Mega Rayquaza Clause', 'Swagger Clause', 'Baton Pass Clause', 'Endless Battle Clause', 'Sleep Clause Mod', 'Species Clause', 'Nickname Clause', 'OHKO Clause', 'Moody Clause', 'Evasion Moves Clause', 'Endless Battle Clause', 'HP Percentage Mod', 'Cancel Mod'],
-		banlist: ['Rayquaza-Mega', 'Groudon-Primal', 'Kyogre-Primal', 'Lucario-Mega', 'Lucarionite', 'CAP', 'Unreleased']
+		ruleset: ['Pokemon', 'Team Preview', 'Mega Rayquaza Clause', 'Swagger Clause', 'Baton Pass Clause', 'Endless Battle Clause', 'Sleep Clause Mod', 'Species Clause', 'Nickname Clause', 'OHKO Clause', 'Moody Clause', 'Evasion Moves Clause', 'Endless Battle Clause', 'HP Percentage Mod', 'Cancel Mod'],
+		banlist: ['Rayquaza-Mega', 'Groudon-Primal', 'Kyogre-Primal', 'Lucario-Mega', 'Lucarionite', 'CAP', 'Unreleased', 'Aegislash-Blade', 'Castform-Rainy', 'Castform-Sunny', 'Meloetta-Pirouette', 'Castform-Snowy', 'Cherrim-Sunshine', 'Darmanitan-Zen', 'Pichu-Spiky-Eared']
 	},
 	{
 		name: "Averagemons",
