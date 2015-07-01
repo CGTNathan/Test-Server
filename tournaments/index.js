@@ -753,12 +753,13 @@ var commands = {
 			}
 		},
 		size: function (playerCap) {
-		if (playerCap && playerCap < 2) {
-			output.sendReply("You cannot have a player cap that is less than 2.");
-			return;
-		} else {
-		this.playerCap = playerCap;
-		this.room.send('The tournament size has been set to ' + playerCap + '.')
+			if (playerCap && playerCap < 2) {
+				output.sendReply("You cannot have a player cap that is less than 2.");
+				return;
+			} else {
+			this.playerCap = playerCap;
+			this.room.send('The tournament size has been set to ' + playerCap + '.')
+			}
 		},
 		getusers: function (tournament) {
 			if (!this.canBroadcast()) return;
