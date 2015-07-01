@@ -678,7 +678,64 @@ var commands = exports.commands = {
 		"Parameters can be excluded through the use of '!', e.g., '!water type' excludes all water types.",
 		"The parameter 'mega' can be added to search for Mega Evolutions only, and the parameter 'NFE' can be added to search not-fully evolved Pokemon only.",
 		"The order of the parameters does not matter."],
+	
+	randp: function (target, room, user, connection, cmd) {
+		if (!this.canBroadcast()) return;
 
+		var buffer = '';
+		var targetId = toId(target);
+        	if (!this.canBroadcast()) return;
+			var x = Math.floor((Math.random() * 721) + 1);
+			var pokeNum = x;
+	
+		if (targetId === '' + parseInt(targetId)) {
+			for (var p in Tools.data.Pokedex) {
+				var pokemon = Tools.getTemplate(p);
+				if (pokeNum === parseInt(target)) {
+					target = pokemon.species;
+					targetId = pokemon.id;
+					break;
+				}
+			}
+		}
+	
+		var newTargets = Tools.dataSearch(target);
+		for (var i = 0; i < newTargets.length; ++i) {
+			if (newTargets[i].id !== targetId && !Tools.data.Aliases[targetId] && !i) {
+				buffer = "No Pok\u00e9mon, item, move, ability or nature named '" + target + "' was found. Showing the data of '" + newTargets[0].name + "' instead.\n";
+			} else {
+				var details;
+				var pokemon = Tools.getTemplate(newTargets[0].name);
+				var weighthit = 20;
+				if (pokemon.weightkg >= 200) {
+					weighthit = 120;
+				} else if (pokemon.weightkg >= 100) {
+					weighthit = 100;
+				} else if (pokemon.weightkg >= 50) {
+					weighthit = 80;
+				} else if (pokemon.weightkg >= 25) {
+					weighthit = 60;
+				} else if (pokemon.weightkg >= 10) {
+					weighthit = 40;
+				}
+				var pokeName = pokemon.species;
+				var pokeType = pokemon.type;
+				var pokeGen = pokemon.gen;
+				var pokeHp = pokemon.baseStats[0];
+				var pokeAtk = pokemon.baseStats[1];
+				var pokeDef = pokemon.baseStats[2];
+				var pokeSpa = pokemon.baseStats[3];
+				var pokeSpd = pokemon.baseStats[4];
+				var pokeSpe = pokemon.baseStats[5];
+				var pokeBst = pokemon.baseStats[0] + pokemon.baseStats[1] + pokemon.baseStats[2] + pokemon.baseStats[3] + pokemon.baseStats[4] + pokemon.baseStats[5];
+				var pokeColor = pokemon.color;
+				var pokeEgg = pokemon.eggGroups.join(", ");
+			
+				buffer += '|raw|<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + pokeName + '.png"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b>' + pokeType + '<b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpA + ' / SpD ' + pokeSpD + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b>' + pokeColor + '<br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>';
+			}
+		}
+		this.sendReply(buffer);
+	},
 	rollpokemon: 'randompokemon',
 	randpoke: 'randompokemon',
 	randompokemon: function (target, room, user, connection, cmd) {
