@@ -752,13 +752,13 @@ var commands = {
 				tournament.removeUser(user, this);
 			}
 		},
-		size: function (playerCap) {
-			if (playerCap && playerCap < 2) {
+		size: function (tournament, user, params, cmd) {
+			if (params && params < 2) {
 				output.sendReply("You cannot have a player cap that is less than 2.");
 				return;
 			} else {
-			this.playerCap = playerCap;
-			this.room.send('The tournament size has been set to ' + playerCap + '.')
+			tournament.playerCap = params;
+			this.room.send('The tournament size has been set to ' + params + '.')
 			}
 		},
 		getusers: function (tournament) {
