@@ -731,7 +731,7 @@ var commands = exports.commands = {
 				var pokeColor = pokemon.color;
 				var pokeEgg = pokemon.eggGroups.join(", ");
 			
-				buffer += '|raw|<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + pokeName + '.png"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b>' + pokeType + '<b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpA + ' / SpD ' + pokeSpD + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b>' + pokeColor + '<br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>';
+				buffer += '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + pokeName + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b>' + pokeType + '<br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpA + ' / SpD ' + pokeSpD + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b>' + pokeColor + '<br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>';
 			}
 		}
 		this.sendReply(buffer);
@@ -742,7 +742,68 @@ var commands = exports.commands = {
 		var targets = target.split(",");
 		var targetsBuffer = [];
 		var qty;
-		for (var i = 0; i < targets.length; i++) {
+		for (var i = 0; i < targets
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+                                        weighthit = 60;
+                                } else if (pokemon.weightkg >= 10) {
+                                        weighthit = 40;
+                                }
+                                var pokeName = pokemon.species;
+                                var pokeType = pokemon.type;
+                                var pokeGen = pokemon.gen;
+                                var pokeHp = pokemon.baseStats[0];
+                                var pokeAtk = pokemon.baseStats[1];
+                                var pokeDef = pokemon.baseStats[2];
+                                var pokeSpa = pokemon.baseStats[3];
+                                var pokeSpd = pokemon.baseStats[4];
+                                var pokeSpe = pokemon.baseStats[5];
+                                var pokeBst = pokemon.baseStats[0] + pokemon.baseStats[1] + pokemon.baseStats[2] + pokemon.baseStats[3] + pokemon.baseStats[4] + pokemon.baseStats[5];
+                                var pokeColor = pokemon.color;
+                                var pokeEgg = pokemon.eggGroups.join(", ");
+                        
+                                buffer += '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + pokeName + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b>' + pokeType + '<br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpA + ' / SpD ' + pokeSpD + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b>' + pokeColor + '<br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>';
+                        }
+                }
+                this.sendReply(buffer);
+        },
+        rollpokemon: 'randompokemon',
+        randpoke: 'randompokemon',
+        randompokemon: function (target, room, user, connection, cmd) {
+                var targets = target.split(",");
+                var targetsBuffer = [];
+                var qty;
+                for (var i = 0; i < targets.length; i++) {
+.length; i++) {
 			if (!targets[i]) continue;
 			var num = Number(targets[i]);
 			if (Number.isInteger(num)) {
