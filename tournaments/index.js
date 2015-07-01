@@ -916,14 +916,14 @@ CommandParser.commands.tournament = function (paramString, room, user) {
 
 		var tour = createTournament(room, params.shift(), params.shift(), params.shift(), Config.istournamentsrated, params, this);
 		if (tour) {
-			if (tour.format === 'ce') {
-				tournament.playerCap = 16;
-				this.sendReply('The tournament size has been defaulted to 16. To change it, type "/tour size [#]".');
-			}
 			this.privateModCommand("(" + user.name + " created a tournament in " + tour.format + " format.)");
 			if (Config.tourannouncements && Config.tourannouncements.indexOf(room.id) >= 0) {
 				var tourRoom = Rooms.search(Config.tourroom || 'tournaments');
 				if (tourRoom) tourRoom.addRaw('<div class="infobox"><a href="/' + room.id + '" class="ilink"><b>' + Tools.getFormat(tour.format).name + '</b> tournament created in <b>' + room.title + '</b>.</a></div>');
+			}
+			if (tour.format === 'ce') {
+				this.parse('/tour size 16')
+				this.sendReply('To change it, type "/tour size [#]".');
 			}
 		}
 	} else {
