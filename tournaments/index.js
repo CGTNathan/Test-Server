@@ -758,11 +758,11 @@ var commands = {
 				return;
 			} else if (tournament.format === 'ce') {
 				for (var n = 1; n <= 6; n++) {
-					if (params === 2 ^ n) {
+					if (params === Math.pow(2, n) {
 						tournament.playerCap = params;
-						this.room.send('The tournament size has been set to ' + params + '.')
+						this.room.send('The tournament size has been set to ' + params + '.');
 					} else {
-						this.sendReply('C&E Tier requires the player cap to be a power of 2!')
+						this.sendReply('C&E Tier requires the player cap to be a power of 2!');
 					}
 				}
 			} else {
