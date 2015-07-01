@@ -43,6 +43,9 @@ function createTournament(room, format, generator, playerCap, isRated, args, out
 		output.sendReply(format.id + " is not a valid format.");
 		output.sendReply("Valid formats: " + Object.keys(Tools.data.Formats).filter(function (f) { return Tools.data.Formats[f].effectType === 'Format'; }).join(", "));
 		return;
+	} else if (format = 'ce') {
+		tournament.playerCap = 16
+		this.sendReply('The tournament size has been defaulted to 16. To change it, type "/tour size [#]".')
 	}
 	if (!TournamentGenerators[toId(generator)]) {
 		output.sendReply(generator + " is not a valid type.");
