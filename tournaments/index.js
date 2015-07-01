@@ -756,7 +756,7 @@ var commands = {
 			if (params && params < 2) {
 				this.sendReply("You cannot have a player cap that is less than 2.");
 				return;
-			} else if (CommandParser.commands.tour.format === 'ce') {
+			} else if (tournament.format === 'ce') {
 				for (var n = 1; n <= 6; n++) {
 					if (params === 2 ^ n) {
 						tournament.playerCap = params;
