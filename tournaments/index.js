@@ -752,7 +752,7 @@ var commands = {
 				tournament.removeUser(user, this);
 			}
 		},
-		size: function (tournament, user, ,room, params, cmd) {
+		size: function (tournament, user, room, params, cmd) {
 			if (tournament.room.format === 'ce') {
 				if (params && params < 2) {
 					this.sendReply("You cannot have a player cap that is less than 2.");
