@@ -435,7 +435,7 @@ exports.Formats = [
 		section: "Other Metagames",
 
 		ruleset: ['Pokemon', 'Team Preview', 'Mega Rayquaza Clause', 'Swagger Clause', 'Baton Pass Clause', 'Endless Battle Clause', 'Sleep Clause Mod', 'Species Clause', 'Nickname Clause', 'OHKO Clause', 'Moody Clause', 'Evasion Moves Clause', 'Endless Battle Clause', 'HP Percentage Mod', 'Cancel Mod'],
-		banlist: ['Rayquaza-Mega', 'Groudon-Primal', 'Kyogre-Primal', 'Lucario-Mega', 'Lucarionite', 'CAP', 'Unreleased', 'Aegislash-Blade', 'Castform-Rainy', 'Castform-Sunny', 'Meloetta-Pirouette', 'Castform-Snowy', 'Cherrim-Sunshine', 'Darmanitan-Zen', 'Pichu-Spiky-Eared', 'Soul Dew']
+		banlist: ['Rayquaza-Mega', 'Groudon-Primal', 'Kyogre-Primal', 'Lucario-Mega', 'Lucarionite', 'CAP', 'Unreleased', 'Aegislash-Blade', 'Castform-Rainy', 'Castform-Sunny', 'Meloetta-Pirouette', 'Castform-Snowy', 'Cherrim-Sunshine', 'Darmanitan-Zen', 'Pichu-Spiky-Eared', 'Arceus-Bug', 'Arceus-Dark', 'Arceus-Dragon', 'Arceus-Electric', 'Arceus-Fairy', 'Arceus-Fighting', 'Arceus-Fire', 'Arceus-Flying', 'Arceus-Ghost', 'Arceus-Grass', 'Arceus-Ground', 'Arceus-Ice', 'Arceus-Poison', 'Arceus-Psychic', 'Arceus-Rock', 'Arceus-Steel', 'Arceus-Water', 'Soul Dew']
 	},
 	{
 		name: "C&E",
