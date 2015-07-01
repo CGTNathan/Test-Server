@@ -754,7 +754,7 @@ var commands = {
 		},
 		size: function (tournament, user, params, cmd) {
 			if (params && params < 2) {
-				output.sendReply("You cannot have a player cap that is less than 2.");
+				this.sendReply("You cannot have a player cap that is less than 2.");
 				return;
 			} else {
 			tournament.playerCap = params;
