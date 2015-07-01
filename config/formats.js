@@ -375,7 +375,7 @@ exports.Formats = [
 		banlist: ['Rayquaza-Mega', 'Groudon-Primal', 'Kyogre-Primal', 'Lucario-Mega', 'Lucarionite', 'CAP', 'Unreleased', 'Aegislash-Blade', 'Castform-Rainy', 'Castform-Sunny', 'Meloetta-Pirouette', 'Castform-Snowy', 'Cherrim-Sunshine', 'Darmanitan-Zen', 'Pichu-Spiky-Eared', 'Soul Dew']
 	},
 	{
-			name: "C&E",
+		name: "C&E",
 		section: "Other Metagames",
 
 		ruleset: ['Pokemon', 'Standard', 'Team Preview', 'Swagger Clause', 'Baton Pass Clause'],
