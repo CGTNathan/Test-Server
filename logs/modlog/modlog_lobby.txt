@@ -22,3 +22,6 @@
 [2015-07-01T18:38:02.236Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
 [2015-07-01T18:46:29.277Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
 [2015-07-01T18:53:28.666Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T18:58:51.335Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T19:08:49.172Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T19:17:57.788Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
