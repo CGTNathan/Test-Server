@@ -753,21 +753,26 @@ var commands = {
 			}
 		},
 		size: function (tournament, user, params, cmd) {
-			if (params && params < 2) {
+			if (tournament.format === 'ce') {
+				if (params && params < 2) {
+					this.sendReply("You cannot have a player cap that is less than 2.");
+					return;
+				} else {
+					for (var n = 1; n <= 6; n++) {
+						if (params && params !== Math.pow(2, parseInt(n))) {
+							this.sendReply('C&E Tier requires the player cap to be a power of 2!');	
+						} else {
+							tournament.playerCap = params;
+							this.room.send('The tournament size has been set to ' + params + '.');
+						}
+					}
+				}
+			} else if (params && params < 2) {
 				this.sendReply("You cannot have a player cap that is less than 2.");
 				return;
-			} else if (tournament.format === 'ce') {
-				for (var n = 1; n <= 6; n++) {
-					if (params && params !== Math.pow(2, parseInt(n))) {
-						this.sendReply('C&E Tier requires the player cap to be a power of 2!');	
-					} else {
-						tournament.playerCap = params;
-						this.room.send('The tournament size has been set to ' + params + '.');
-				  }
-				}
 			} else {
-			tournament.playerCap = params;
-			this.room.send('The tournament size has been set to ' + params + '.')
+				tournament.playerCap = params;
+				this.room.send('The tournament size has been set to ' + params + '.');
 			}
 		},
 		getusers: function (tournament) {
