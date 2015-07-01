@@ -753,7 +753,46 @@ var commands = {
 			}
 		},
 		size: function (tournament, user, params, cmd) {
-			if (params && params < 2) {
+			if (tournament.format === 'ce') {
+				if (params && params < 2) {
+					this.sendReply("You cannot have a player cap that is less than 2.");
+					return;
+				} else {
+					var isEven = function (params) {
+						switch (params) {
+							case 2:
+								tournament.playerCap = params;
+								this.room.send('The tournament size has been set to ' + params + '.');
+								break;
+							case 4:
+								tournament.playerCap = params;
+								this.room.send('The tournament size has been set to ' + params + '.');
+								break;
+							case 8:
+								tournament.playerCap = params;
+								this.room.send('The tournament size has been set to ' + params + '.');
+								break;
+							case 16:
+								tournament.playerCap = params;
+								this.room.send('The tournament size has been set to ' + params + '.');
+								break;
+							case 32:
+								tournament.playerCap = params;
+								this.room.send('The tournament size has been set to ' + params + '.');
+								break;
+							case 64:
+								tournament.playerCap = params;
+								this.room.send('The tournament size has been set to ' + params + '.');
+								break;
+							default:
+								this.sendReply("You cannot have a player cap that is less than 2.");
+								return;
+							}
+						isEven(params)
+					}
+				}
+				
+			} else if (params && params < 2) {
 				this.sendReply("You cannot have a player cap that is less than 2.");
 				return;
 			} else {
