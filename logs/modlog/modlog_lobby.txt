@@ -1,1 +1,17 @@
 [2015-07-01T04:45:23.051Z] (lobby) (Mr. CGTNathan created a tournament in megatier format.)
+[2015-07-01T05:38:42.549Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T05:52:52.157Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T06:00:08.480Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T06:09:36.965Z] (lobby) (Master Float was disqualified from the tournament by Mr. CGTNathan)
+[2015-07-01T06:10:52.533Z] (lobby) (Mr. CGTNathan forcibly ended a tournament.)
+[2015-07-01T06:30:39.299Z] (lobby) (Mr. CGTNathan created a tournament in megatier format.)
+[2015-07-01T06:56:01.871Z] (lobby) (Mr. CGTNathan created a tournament in megatier format.)
+[2015-07-01T07:02:14.557Z] (lobby) Champion Stormvy was muted by Mr. CGTNathan for 7 minutes.
+[2015-07-01T07:22:13.256Z] (lobby) (Prof. Nightmare was disqualified from the tournament by Mr. CGTNathan)
+[2015-07-01T07:31:23.735Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T07:33:39.992Z] (lobby) Mr. CGTNathan declared Only 1 reroll around!
+[2015-07-01T07:47:24.976Z] (lobby) (Mr. CGTNathan created a tournament in megatier format.)
+[2015-07-01T17:11:33.543Z] (lobby) (Mr. CGTNathan created a tournament in megatier format.)
+[2015-07-01T17:19:01.015Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T17:19:45.007Z] (lobby) (Mr. CGTNathan forcibly ended a tournament.)
+[2015-07-01T17:19:52.345Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
