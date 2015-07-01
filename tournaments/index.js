@@ -917,8 +917,8 @@ CommandParser.commands.tournament = function (paramString, room, user) {
 		var tour = createTournament(room, params.shift(), params.shift(), params.shift(), Config.istournamentsrated, params, this);
 		if (tour) {
 			if (tour.format === 'ce') {
-				tournament.playerCap = 16
-				this.sendReply('The tournament size has been defaulted to 16. To change it, type "/tour size [#]".')
+				tournament.playerCap = 16;
+				this.sendReply('The tournament size has been defaulted to 16. To change it, type "/tour size [#]".');
 			}
 			this.privateModCommand("(" + user.name + " created a tournament in " + tour.format + " format.)");
 			if (Config.tourannouncements && Config.tourannouncements.indexOf(room.id) >= 0) {
