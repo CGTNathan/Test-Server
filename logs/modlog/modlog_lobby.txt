@@ -27,3 +27,5 @@
 [2015-07-01T19:17:57.788Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
 [2015-07-01T19:43:05.796Z] (lobby) (Mr. CGTNathan created a tournament in megatier format.)
 [2015-07-01T19:51:46.854Z] (lobby) (Mr. CGTNathan forcibly ended a tournament.)
+[2015-07-01T19:55:52.693Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T20:03:56.635Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
