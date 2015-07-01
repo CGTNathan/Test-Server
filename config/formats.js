@@ -372,7 +372,7 @@ exports.Formats = [
 		section: "Other Metagames",
 
 		ruleset: ['Megatier', 'Team Preview', 'Mega Rayquaza Clause', 'Swagger Clause', 'Baton Pass Clause', 'Endless Battle Clause', 'Sleep Clause Mod', 'Species Clause', 'Nickname Clause', 'OHKO Clause', 'Moody Clause', 'Evasion Moves Clause', 'Endless Battle Clause', 'HP Percentage Mod', 'Cancel Mod'],
-		banlist: ['Groudon-Primal', 'Kyogre-Primal', 'Lucario-Mega', 'Lucarionite']
+		banlist: ['Rayquaza-Mega', 'Groudon-Primal', 'Kyogre-Primal', 'Lucario-Mega', 'Lucarionite', 'CAP', 'Unreleased']
 	},
 	{
 		name: "Averagemons",
