@@ -759,10 +759,10 @@ var commands = {
 					return;
 				} else {
 					if (params && params === 2 || params && params === 4 || params && params === 8 || params && params === 16 || params && params === 32 || params && params === 64) {
-						this.sendReply('C&E Tier requires the player cap to be a power of 2!');	
-					} else {
 						tournament.playerCap = params;
 						this.room.send('The tournament size has been set to ' + params + '.');
+					} else {
+						this.sendReply('C&E Tier requires the player cap to be a power of 2!');	
 					}
 				}
 			} else if (params && params < 2) {
