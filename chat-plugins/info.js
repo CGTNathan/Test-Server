@@ -679,25 +679,50 @@ var commands = exports.commands = {
 		"The parameter 'mega' can be added to search for Mega Evolutions only, and the parameter 'NFE' can be added to search not-fully evolved Pokemon only.",
 		"The order of the parameters does not matter."],
 	
-	randp: function (target, room, user, connection, cmd) {
-		if (!this.canBroadcast()) return;
-
-		var buffer = '';
-		var targetId = toId(target);
+	randp: function (room, user) {
         	if (!this.canBroadcast()) return;
-			var x = Math.floor((Math.random() * 721) + 1);
-			var pokeNum = x;
+
+        	var randP = '';
+        	var x = Math.floor((Math.random() * 721) + 1);
+        	var pokeNum = parseInt(x);
+        	var targetId = toId(pokeNum);
+        	if (targetId === '' + parseInt(pokeNum)) {
+        	    for (var p in Tools.data.Pokedex) {
+	                var pokemon = Tools.getTemplate(p);
+                	if (pokemon.num === parseInt(pokeNum)) {
+                    	pokeNum = pokemon.species;
+                    	targetId = pokemon.id;
+                    	break;
+            		}
+        	}
+    	}
 	
-		if (targetId === '' + parseInt(targetId)) {
-			for (var p in Tools.data.Pokedex) {
-				var pokemon = Tools.getTemplate(p);
-				if (pokeNum === parseInt(target)) {
-					target = pokemon.species;
-					targetId = pokemon.id;
-					break;
-				}
-			}
-		}
+            	var newTargets = Tools.dataSearch(pokeNum);
+            	if (newTargets && newTargets.length) {
+            		for (var i = 0; i < newTargets.length; ++i) {
+	        	        var pokemon = Tools.getTemplate(newTargets[0].name);
+                		var pokeName = pokemon.species;
+                		var pokeType1 = pokemon.types[0];
+                		var pokeType2 = pokemon.types[1];
+                		var pokeGen = pokemon.gen;
+                		var pokeHp = pokemon.baseStats['hp'];
+                		var pokeAtk = pokemon.baseStats['atk'];
+                		var pokeDef = pokemon.baseStats['def'];
+                		var pokeSpa = pokemon.baseStats['spa'];
+                		var pokeSpd = pokemon.baseStats['spd'];
+                		var pokeSpe = pokemon.baseStats['spe'];
+                		var pokeBst = pokemon.baseStats['hp'] + pokemon.baseStats.atk + pokemon.baseStats.def + pokemon.baseStats.spa + pokemon.baseStats.spd + pokemon.baseStats.spe;
+                		var pokeColor = pokemon.color;
+                		var pokeEgg = pokemon.eggGroups.join(", ");
+                		if (pokemon.types.length === 2) {
+                    			randP = '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + string(pokeName).toLowerCase() + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b><img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType1 + '.png" width="32" height="14"> <img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType2 + '.png" width="32" height="14"><br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpa + ' / SpD ' + pokeSpd + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b><font color="' + pokeColor + '">' + pokeColor + '</font><br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>'
+                		} else {
+                    			randP = '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + string(pokeName).toLowerCase() + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b><img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType1 + '.png" width="32" height="14"><br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpa + ' / SpD ' + pokeSpd + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b><font color="' + pokeColor + '">' + pokeColor + '</font><br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>'
+                		}
+            		}
+        	this.sendReplyBox(randP);
+    		}    
+	}
 	
 		var newTargets = Tools.dataSearch(target);
 		for (var i = 0; i < newTargets.length; ++i) {
