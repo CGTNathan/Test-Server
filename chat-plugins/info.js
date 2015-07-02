@@ -722,7 +722,7 @@ var commands = exports.commands = {
             		}
         	this.sendReplyBox(randP);
             	}
-	}
+	},
 	
 	ms: 'movesearch',
 	msearch: 'movesearch',
