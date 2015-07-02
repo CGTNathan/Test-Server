@@ -50,3 +50,8 @@
 [2015-07-01T21:01:33.863Z] (lobby) (Mr. CGTNathan forcibly ended a tournament.)
 [2015-07-01T21:12:32.091Z] (lobby) (Mr. CGTNathan created a tournament in megatier format.)
 [2015-07-01T21:21:39.483Z] (lobby) Neo Soul was promoted to Voice by Mr. CGTNathan.
+[2015-07-01T23:08:54.664Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-01T23:47:35.106Z] (lobby) (Mr. CGTNathan created a tournament in ce format.)
+[2015-07-02T00:11:16.983Z] (lobby) (Mr. CGTNathan created a tournament in staaabmons format.)
+[2015-07-02T00:13:24.834Z] (lobby) (Mr. CGTNathan forcibly ended a tournament.)
+[2015-07-02T00:13:40.695Z] (lobby) (Mr. CGTNathan created a tournament in staaabmons format.)
