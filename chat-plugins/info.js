@@ -684,17 +684,17 @@ var commands = exports.commands = {
 	
 		var randP = '';
 		var x = Math.floor((Math.random() * 721) + 1);
-       		var pokeNum = parseInt(x);
-       		var targetId = toId(pokeNum);
-       		if (targetId === '' + parseInt(pokeNum)) {
-       			for (var p in Tools.data.Pokedex) {
-          			var pokemon = Tools.getTemplate(p);
+		var pokeNum = parseInt(x);
+		var targetId = toId(pokeNum);
+		if (targetId === '' + parseInt(pokeNum)) {
+			for (var p in Tools.data.Pokedex) {
+				var pokemon = Tools.getTemplate(p);
 				if (pokemon.num === parseInt(pokeNum)) {
-               		   	pokeNum = pokemon.species;
-                	  	targetId = pokemon.id;
+					pokeNum = pokemon.species;
+					targetId = pokemon.id;
 					break;
-            			}
-	        	}
+				}
+			}
 		}	
 		var newTargets = Tools.dataSearch(pokeNum);
 		if (newTargets && newTargets.length) {
@@ -713,14 +713,14 @@ var commands = exports.commands = {
 				var pokeBst = pokemon.baseStats['hp'] + pokemon.baseStats.atk + pokemon.baseStats.def + pokemon.baseStats.spa + pokemon.baseStats.spd + pokemon.baseStats.spe;
 				var pokeColor = pokemon.color;
 				var pokeEgg = pokemon.eggGroups.join(", ");
-				if (pokemon.types.length === 2) {
-					randP = '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + string(pokeName).toLowerCase().replace(/[^a-z0-9]+/g, '') + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b><img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType1 + '.png" width="32" height="14"> <img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType2 + '.png" width="32" height="14"><br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpa + ' / SpD ' + pokeSpd + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b><font color="' + pokeColor + '">' + pokeColor + '</font><br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>'
-               			} else {
-					randP = '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + string(pokeName).toLowerCase().replace(/[^a-z0-9]+/g, '') + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b><img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType1 + '.png" width="32" height="14"><br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpa + ' / SpD ' + pokeSpd + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b><font color="' + pokeColor + '">' + pokeColor + '</font><br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>'
-	           		}
 			}
 		}
-        	this.sendReplyBox(randP);
+		if (pokemon.types.length === 2) {
+			randP = '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + string(pokeName).toLowerCase().replace(/[^a-z0-9]+/g, '') + '.png" height="96" 	width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b><img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType1 + '.png" width="32" height="14"> <img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType2 + '.png" width="32" height="14"><br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpa + ' / SpD ' + pokeSpd + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b><font color="' + pokeColor + '">' + pokeColor + '</font><br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>'
+		} else {
+			randP = '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + string(pokeName).toLowerCase().replace(/[^a-z0-9]+/g, '') + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b><img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType1 + '.png" width="32" height="14"><br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpa + ' / SpD ' + pokeSpd + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b><font color="' + pokeColor + '">' + pokeColor + '</font><br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>'
+		}
+		this.sendReplyBox(randP);
 	},
 	
 	ms: 'movesearch',
