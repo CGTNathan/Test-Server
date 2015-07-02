@@ -701,6 +701,8 @@ var commands = exports.commands = {
             	if (newTargets && newTargets.length) {
             		for (var i = 0; i < newTargets.length; ++i) {
                 		var pokemon = Tools.getTemplate(newTargets[0].name);
+                		var pokemon = formes[i][this.random(formes[i].length)];
+				var template = this.getTemplate(pokemon);
                 		var pokeName = pokemon.species;
                 		var pokeType1 = pokemon.types[0];
                 		var pokeType2 = pokemon.types[1];
