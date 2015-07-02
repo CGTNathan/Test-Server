@@ -680,27 +680,27 @@ var commands = exports.commands = {
 		"The order of the parameters does not matter."],
 	
 	randp: function (room, user) {
-        	if (!this.canBroadcast()) return;
-
+	        if (!this.canBroadcast()) return;
+	
         	var randP = '';
         	var x = Math.floor((Math.random() * 721) + 1);
         	var pokeNum = parseInt(x);
         	var targetId = toId(pokeNum);
         	if (targetId === '' + parseInt(pokeNum)) {
-        	    for (var p in Tools.data.Pokedex) {
-	                var pokemon = Tools.getTemplate(p);
-                	if (pokemon.num === parseInt(pokeNum)) {
-                    	pokeNum = pokemon.species;
-                    	targetId = pokemon.id;
-                    	break;
-            		}
-        	}
-    	}
+            		for (var p in Tools.data.Pokedex) {
+                		var pokemon = Tools.getTemplate(p);
+                		if (pokemon.num === parseInt(pokeNum)) {
+	                	   	pokeNum = pokemon.species;
+                    			targetId = pokemon.id;
+                    			break;
+            			}
+	        	}
+    		}
 	
             	var newTargets = Tools.dataSearch(pokeNum);
             	if (newTargets && newTargets.length) {
             		for (var i = 0; i < newTargets.length; ++i) {
-	        	        var pokemon = Tools.getTemplate(newTargets[0].name);
+                		var pokemon = Tools.getTemplate(newTargets[0].name);
                 		var pokeName = pokemon.species;
                 		var pokeType1 = pokemon.types[0];
                 		var pokeType2 = pokemon.types[1];
@@ -709,62 +709,21 @@ var commands = exports.commands = {
                 		var pokeAtk = pokemon.baseStats['atk'];
                 		var pokeDef = pokemon.baseStats['def'];
                 		var pokeSpa = pokemon.baseStats['spa'];
-                		var pokeSpd = pokemon.baseStats['spd'];
-                		var pokeSpe = pokemon.baseStats['spe'];
-                		var pokeBst = pokemon.baseStats['hp'] + pokemon.baseStats.atk + pokemon.baseStats.def + pokemon.baseStats.spa + pokemon.baseStats.spd + pokemon.baseStats.spe;
-                		var pokeColor = pokemon.color;
+        	 		var pokeSpd = pokemon.baseStats['spd'];
+        	 		var pokeSpe = pokemon.baseStats['spe'];
+        	 		var pokeBst = pokemon.baseStats['hp'] + pokemon.baseStats.atk + pokemon.baseStats.def + pokemon.baseStats.spa + pokemon.baseStats.spd + pokemon.baseStats.spe;
+        		 	var pokeColor = pokemon.color;
                 		var pokeEgg = pokemon.eggGroups.join(", ");
                 		if (pokemon.types.length === 2) {
                     			randP = '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + string(pokeName).toLowerCase() + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b><img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType1 + '.png" width="32" height="14"> <img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType2 + '.png" width="32" height="14"><br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpa + ' / SpD ' + pokeSpd + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b><font color="' + pokeColor + '">' + pokeColor + '</font><br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>'
                 		} else {
                     			randP = '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + string(pokeName).toLowerCase() + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b><img src="http://play.pokemonshowdown.com/sprites/types/' + pokeType1 + '.png" width="32" height="14"><br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpa + ' / SpD ' + pokeSpd + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b><font color="' + pokeColor + '">' + pokeColor + '</font><br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>'
-                		}
+	                	}
             		}
         	this.sendReplyBox(randP);
-    		}    
+            	}
 	}
 	
-		var newTargets = Tools.dataSearch(target);
-		for (var i = 0; i < newTargets.length; ++i) {
-			if (newTargets[i].id !== targetId && !Tools.data.Aliases[targetId] && !i) {
-				buffer = "No Pok\u00e9mon, item, move, ability or nature named '" + target + "' was found. Showing the data of '" + newTargets[0].name + "' instead.\n";
-			} else {
-				var details;
-				var pokemon = Tools.getTemplate(newTargets[0].name);
-				var weighthit = 20;
-				if (pokemon.weightkg >= 200) {
-					weighthit = 120;
-				} else if (pokemon.weightkg >= 100) {
-					weighthit = 100;
-				} else if (pokemon.weightkg >= 50) {
-					weighthit = 80;
-				} else if (pokemon.weightkg >= 25) {
-					weighthit = 60;
-				} else if (pokemon.weightkg >= 10) {
-					weighthit = 40;
-				}
-				var pokeName = pokemon.species;
-				var pokeType = pokemon.type;
-				var pokeGen = pokemon.gen;
-				var pokeHp = pokemon.baseStats[0];
-				var pokeAtk = pokemon.baseStats[1];
-				var pokeDef = pokemon.baseStats[2];
-				var pokeSpa = pokemon.baseStats[3];
-				var pokeSpd = pokemon.baseStats[4];
-				var pokeSpe = pokemon.baseStats[5];
-				var pokeBst = pokemon.baseStats[0] + pokemon.baseStats[1] + pokemon.baseStats[2] + pokemon.baseStats[3] + pokemon.baseStats[4] + pokemon.baseStats[5];
-				var pokeColor = pokemon.color;
-				var pokeEgg = pokemon.eggGroups.join(", ");
-			
-				buffer += '<table><tr><td><img src="http://play.pokemonshowdown.com/sprites/bw/' + pokeName + '.png" height="96" width="96"></td><td><b>Name: </b>' + pokeName + '<br/><b>Type: </b>' + pokeType + '<br/><b>Stats: </b> HP ' + pokeHp + ' / Atk ' + pokeAtk + ' / Def ' + pokeDef + ' / SpA ' + pokeSpA + ' / SpD ' + pokeSpD + ' / Spe ' + pokeSpe + ' / BST ' + pokeBst + '<br/><b>Color: </b>' + pokeColor + '<br/><b>Egg Group: </b>' + pokeEgg + '</td></tr></table>';
-			}
-		}
-		this.sendReplyBox(buffer);
-	},
-	randompokemonhelp: ["/randompokemon - Generates random Pokemon based on given search conditions.",
-		"/randompokemon uses the same parameters as /dexsearch (see '/help ds').",
-		"Adding a number as a parameter returns that many random Pokemon, e.g., '/randpoke 6' returns 6 random Pokemon."],
-
 	ms: 'movesearch',
 	msearch: 'movesearch',
 	movesearch: function (target, room, user) {
