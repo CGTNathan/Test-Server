@@ -294,7 +294,6 @@ exports.BattleFormats = {
 		}
 	},
 	teampreviewvgc: {
-		effectType: 'Rule',
 		onStartPriority: -10,
 		onStart: function () {
 			this.add('clearpoke');
@@ -310,7 +309,6 @@ exports.BattleFormats = {
 		}
 	},
 	teampreview1v1: {
-		effectType: 'Rule',
 		onStartPriority: -10,
 		onStart: function () {
 			this.add('clearpoke');
@@ -326,7 +324,6 @@ exports.BattleFormats = {
 		}
 	},
 	teampreview: {
-		effectType: 'Rule',
 		onStartPriority: -10,
 		onStart: function () {
 			this.add('clearpoke');
@@ -342,7 +339,6 @@ exports.BattleFormats = {
 		}
 	},
 	teampreviewgbu: {
-		effectType: 'Rule',
 		onStartPriority: -10,
 		onStart: function () {
 			this.add('clearpoke');
@@ -633,10 +629,10 @@ exports.BattleFormats = {
 			}
 		}
 	},
-	megarayquazaclause: {
+	megarayquazabanmod: {
 		effectType: 'Rule',
 		onStart: function () {
-			this.add('rule', 'Mega Rayquaza Clause: You cannot mega evolve Rayquaza');
+			this.add('rule', 'Mega Rayquaza Ban Mod: You cannot mega evolve Rayquaza');
 			for (var i = 0; i < this.sides[0].pokemon.length; i++) {
 				if (this.sides[0].pokemon[i].speciesid === 'rayquaza') this.sides[0].pokemon[i].canMegaEvo = false;
 			}

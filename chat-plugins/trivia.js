@@ -19,7 +19,7 @@ const CATEGORIES = {
 	humanities: 'Humanities',
 	miscellaneous: 'Miscellaneous',
 	music: 'Music',
-	pokemon: 'Pok\u00e9mon',
+	pokemon: 'Pokemon',
 	rpm: 'Religion, Philosophy, and Myth',
 	science: 'Science',
 	sports: 'Sports',
@@ -164,6 +164,7 @@ var Trivia = (function () {
 	}
 
 	Trivia.prototype.addParticipant = function (output, user) {
+		if (this.phase !== 'signup') return output.sendReply("There is no trivia game in its signup phase.");
 		if (this.participants.has(user.userid)) return output.sendReply("You have already signed up for this trivia game.");
 
 		var latestIp = user.latestIp;
@@ -182,7 +183,7 @@ var Trivia = (function () {
 			scoreData.responderIndex = -1;
 		}
 		this.participants.set(user.userid, scoreData);
-		output.sendReply("You have signed up for the trivia game.");
+		output.sendReply("You have signed up for the next trivia game.");
 	};
 
 	Trivia.prototype.kickParticipant = function (output, target) {
@@ -197,7 +198,7 @@ var Trivia = (function () {
 	};
 
 	Trivia.prototype.startGame = function (output) {
-		if (this.phase !== 'signup') return output.sendReply("There is no trivia game to start.");
+		if (this.phase !== 'signup') return output.sendReply("There is no trivia game in its signup phase.");
 		if (this.participants.size < 3) return output.sendReply("Not enough users have signed up yet! Trivia games require at least three participants to run.");
 
 		if (this.category === 'random') {
@@ -215,7 +216,7 @@ var Trivia = (function () {
 			return false;
 		}
 
-		this.room.addRaw("<div class=\"broadcast-blue\">The game has begun!</div>");
+		this.room.addRaw("<div class=\"broadcast-blue\">Signups have ended and the game has begun!</div>");
 		this.askQuestion();
 	};
 
@@ -230,16 +231,16 @@ var Trivia = (function () {
 		this.room.update();
 
 		switch (this.mode) {
-		case 'first':
-			this.phaseTimeout = setTimeout(this.noAnswer.bind(this), QUESTION_PERIOD);
-			break;
-		case 'timer':
-			this.askedAt = Date.now();
-			this.phaseTimeout = setTimeout(this.timerAnswers.bind(this), QUESTION_PERIOD);
-			break;
-		case 'number':
-			this.phaseTimeout = setTimeout(this.numberAnswers.bind(this), QUESTION_PERIOD);
-			break;
+			case 'first':
+				this.phaseTimeout = setTimeout(this.noAnswer.bind(this), QUESTION_PERIOD);
+				break;
+			case 'timer':
+				this.askedAt = Date.now();
+				this.phaseTimeout = setTimeout(this.timerAnswers.bind(this), QUESTION_PERIOD);
+				break;
+			case 'number':
+				this.phaseTimeout = setTimeout(this.numberAnswers.bind(this), QUESTION_PERIOD);
+				break;
 		}
 	};
 
@@ -564,7 +565,7 @@ var commands = {
 	// trivia game commands
 	new: function (target, room, user) {
 		if (room.id !== 'trivia' || !this.can('broadcast', null, room) || !target) return false;
-		if ((user.locked || room.isMuted(user)) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
+		if ((user.locked || user.mutedRooms[room.id]) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
 		if (trivia[room.id]) return this.sendReply("There is already a trivia game in progress.");
 
 		target = target.split(',');
@@ -591,14 +592,13 @@ var commands = {
 		if (room.id !== 'trivia') return false;
 		var trivium = trivia[room.id];
 		if (!trivium) return this.sendReply("There is no trivia game in progress.");
-		if (!this.canTalk()) return;
 		trivium.addParticipant(this, user);
 	},
 	joinhelp: ["/trivia join - Join a trivia game during signups."],
 
 	start: function (target, room, user) {
 		if (room.id !== 'trivia' || !this.can('broadcast', null, room)) return false;
-		if ((user.locked || room.isMuted(user)) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
+		if ((user.locked || user.mutedRooms[room.id]) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
 		var trivium = trivia[room.id];
 		if (!trivium) return this.sendReply("There is no trivia game to start.");
 		trivium.startGame(this);
@@ -607,7 +607,7 @@ var commands = {
 
 	kick: function (target, room, user) {
 		if (room.id !== 'trivia' || !this.can('mute', null, room) || !target) return false;
-		if ((user.locked || room.isMuted(user)) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
+		if ((user.locked || user.mutedRooms[room.id]) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
 		var trivium = trivia[room.id];
 		if (!trivium) return this.sendReply("There is no trivia game in progress.");
 		trivium.kickParticipant(this, target);
@@ -628,7 +628,7 @@ var commands = {
 
 	end: function (target, room, user) {
 		if (room.id !== 'trivia' || !this.can('broadcast', null, room)) return false;
-		if ((user.locked || room.isMuted(user)) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
+		if ((user.locked || user.mutedRooms[room.id]) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
 		var trivium = trivia[room.id];
 		if (!trivium) return this.sendReply("There is no trivia game in progress.");
 		trivium.endGame(this, user);
@@ -639,7 +639,7 @@ var commands = {
 	submit: 'add',
 	add: function (target, room, user, connection, cmd) {
 		if (room.id !== 'questionworkshop' || (cmd === 'add' && !this.can('mute', null, room)) || !target) return false;
-		if ((user.locked || room.isMuted(user)) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
+		if ((user.locked || user.mutedRooms[room.id]) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
 
 		target = target.split('|');
 		if (target.length !== 3) return this.sendReply("Invalid arguments specified. View /help trivia for more information.");
@@ -667,8 +667,7 @@ var commands = {
 		var submission = {
 			category: category,
 			question: question,
-			answers: answers,
-			user: user.userid
+			answers: answers
 		};
 
 		if (cmd === 'add') {
@@ -694,12 +693,12 @@ var commands = {
 
 		var buffer = "|raw|<div class=\"ladder\"><table>" +
 			"<tr><td colspan=\"4\"><strong>" + submissionsLen + "</strong> questions await review:</td></tr>" +
-			"<tr><th>#</th><th>Category</th><th>Question</th><th>Answer(s)</th><th>Submitted By</th></tr>";
+			"<tr><th>#</th><th>Category</th><th>Question</th><th>Answer(s)</th></tr>";
 
 		var i = 0;
 		while (i < submissionsLen) {
 			var entry = submissions[i];
-			buffer += "<tr><td><strong>" + (++i) + "</strong></td><td>" + entry.category + "</td><td>" + entry.question + "</td><td>" + entry.answers.join(", ") + "</td><td>" + entry.user + "</td></tr>";
+			buffer += "<tr><td><strong>" + (++i) + "</strong></td><td>" + entry.category + "</td><td>" + entry.question + "</td><td>" + entry.answers.join(", ") + "</td></tr>";
 		}
 		buffer += "</table></div>";
 
@@ -710,7 +709,7 @@ var commands = {
 	reject: 'accept',
 	accept: function (target, room, user, connection, cmd) {
 		if (room.id !== 'questionworkshop' || !this.can('mute', null, room)) return false;
-		if ((user.locked || room.isMuted(user)) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
+		if ((user.locked || user.mutedRooms[room.id]) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
 
 		target = target.trim();
 		if (!target) return false;
@@ -796,7 +795,7 @@ var commands = {
 
 	delete: function (target, room, user) {
 		if (room.id !== 'questionworkshop' || !this.can('mute', null, room)) return false;
-		if ((user.locked || room.isMuted(user)) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
+		if ((user.locked || user.mutedRooms[room.id]) && !user.can('bypassall')) return this.sendReply("You cannot do this while unable to talk.");
 
 		target = target.trim();
 		if (!target) return false;
@@ -957,7 +956,7 @@ exports.commands = {
 		"- First: the first correct responder gains 5 points.",
 		"- Timer: each correct responder gains up to 5 points based on how quickly they answer.",
 		"- Number: each correct responder gains up to 5 points based on how many participants are correct.",
-		"Categories: Anime/Manga, Geography, History, Humanities, Miscellaneous, Music, Pok\u00e9mon, RPM (Religion, Philosophy, and Myth), Science, Sports, TV/Movies, Video Games, and Random.",
+		"Categories: Anime/Manga, Geography, History, Humanities, Miscellaneous, Music, Pokemon, RPM (Religion, Philosophy, and Myth), Science, Sports, TV/Movies, Video Games, and Random.",
 		"Game lengths:",
 		"- Short: 20 point score cap. The winner gains 3 leaderboard points.",
 		"- Medium: 35 point score cap. The winner gains 4 leaderboard points.",

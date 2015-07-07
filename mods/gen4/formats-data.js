@@ -1069,8 +1069,7 @@ exports.BattleFormatsData = {
 	chikorita: {
 		randomBattleMoves: ["reflect","lightscreen","safeguard","aromatherapy","grasswhistle","leechseed","toxic","gigadrain","synthesis"],
 		eventPokemon: [
-			{"generation":3,"level":10,"gender":"M","moves":["tackle","growl","razorleaf"]},
-			{"generation":3,"level":5,"moves":["tackle","growl","ancientpower","frenzyplant"]}
+			{"generation":3,"level":10,"gender":"M","moves":["tackle","growl","razorleaf"]}
 		],
 		tier: "LC"
 	},
@@ -1085,8 +1084,7 @@ exports.BattleFormatsData = {
 	cyndaquil: {
 		randomBattleMoves: ["eruption","fireblast","flamethrower","hiddenpowergrass","naturepower"],
 		eventPokemon: [
-			{"generation":3,"level":10,"gender":"M","moves":["tackle","leer","smokescreen"]},
-			{"generation":3,"level":5,"moves":["tackle","leer","reversal","blastburn"]}
+			{"generation":3,"level":10,"gender":"M","moves":["tackle","leer","smokescreen"]}
 		],
 		tier: "LC"
 	},
@@ -1104,8 +1102,7 @@ exports.BattleFormatsData = {
 	totodile: {
 		randomBattleMoves: ["aquajet","waterfall","crunch","icepunch","superpower","dragondance","swordsdance","return"],
 		eventPokemon: [
-			{"generation":3,"level":10,"gender":"M","abilities":["torrent"],"moves":["scratch","leer","rage"]},
-			{"generation":3,"level":5,"moves":["scratch","leer","crunch","hydrocannon"]}
+			{"generation":3,"level":10,"gender":"M","abilities":["torrent"],"moves":["scratch","leer","rage"]}
 		],
 		tier: "LC"
 	},
@@ -1559,7 +1556,7 @@ exports.BattleFormatsData = {
 		eventPokemon: [
 			{"generation":3,"level":70,"abilities":["pressure"],"moves":["swift","raindance","hydropump","recover"]},
 			{"generation":3,"level":70,"abilities":["pressure"],"moves":["recover","hydropump","raindance","swift"]},
-			{"generation":3,"level":50,"abilities":["pressure"],"moves":["psychoboost","earthquake","hydropump","featherdance"]}
+			{"generation":3,"level":50,"abilities":["pressure"],"moves":["psychoboost","recover","hydropump","featherdance"]}
 		],
 		tier: "Uber"
 	},
@@ -1634,7 +1631,7 @@ exports.BattleFormatsData = {
 	poochyena: {
 		randomBattleMoves: ["superfang","foulplay","suckerpunch","toxic"],
 		eventPokemon: [
-			{"generation":3,"level":10,"abilities":["runaway"],"moves":["healbell","dig","poisonfang","howl"]}
+			{"generation":3,"level":10,"abilities":["runaway"],"moves":["healbell","dig","poisonfang","growl"]}
 		],
 		tier: "LC"
 	},

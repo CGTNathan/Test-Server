@@ -207,9 +207,7 @@ exports.BattleMovedex = {
 		inherit: true,
 		accuracy: 90,
 		basePower: 50,
-		basePowerCallback: function () {
-			return 50;
-		},
+		basePowerCallback: undefined,
 		secondary: {
 			chance: 30,
 			volatileStatus: 'flinch'
@@ -298,31 +296,13 @@ exports.BattleMovedex = {
 		inherit: true,
 		onMoveFail: function (target, source, move) {
 			source.addVolatile('lockedmove');
-		},
-		onAfterMove: function (pokemon) {
-			if (pokemon.volatiles['lockedmove'] && pokemon.volatiles['lockedmove'].duration === 1) {
-				pokemon.removeVolatile('lockedmove');
-			}
 		}
 	},
 	petaldance: {
 		inherit: true,
 		onMoveFail: function (target, source, move) {
 			source.addVolatile('lockedmove');
-		},
-		onAfterMove: function (pokemon) {
-			if (pokemon.volatiles['lockedmove'] && pokemon.volatiles['lockedmove'].duration === 1) {
-				pokemon.removeVolatile('lockedmove');
-			}
 		}
-	},
-	poisongas: {
-		inherit: true,
-		ignoreImmunity: false
-	},
-	poisonpowder: {
-		inherit: true,
-		ignoreImmunity: false
 	},
 	psywave: {
 		inherit: true,
@@ -423,14 +403,6 @@ exports.BattleMovedex = {
 			if (!move) return false;
 			move.isSleepTalk = true;
 			this.useMove(move, pokemon);
-		}
-	},
-	solarbeam: {
-		inherit: true,
-		onBasePower: function (basePower, pokemon, target) {
-			if (this.isWeather('raindance')) {
-				return this.chainModify(0.5);
-			}
 		}
 	},
 	spikes: {
@@ -537,16 +509,7 @@ exports.BattleMovedex = {
 		inherit: true,
 		onMoveFail: function (target, source, move) {
 			source.addVolatile('lockedmove');
-		},
-		onAfterMove: function (pokemon) {
-			if (pokemon.volatiles['lockedmove'] && pokemon.volatiles['lockedmove'].duration === 1) {
-				pokemon.removeVolatile('lockedmove');
-			}
 		}
-	},
-	toxic: {
-		inherit: true,
-		ignoreImmunity: false
 	},
 	triattack: {
 		inherit: true,

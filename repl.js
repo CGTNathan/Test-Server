@@ -6,7 +6,7 @@ var clearedPrefixes = {};
 exports.start = function (prefix, suffix, evalFunction) {
 	if (process.platform === 'win32') return; // Windows doesn't support sockets mounted in the filesystem
 
-	prefix = path.resolve(__dirname, Config.replsocketprefix || 'logs/repl', prefix);
+	prefix = (Config.replsocketprefix || './logs/repl/') + prefix;
 	if (!evalFunction) {
 		evalFunction = suffix;
 		suffix = "";

@@ -221,6 +221,7 @@ exports.replsocketmode = 0600;
 //     - tournaments: creating tournaments (/tour new, settype etc.)
 //     - tournamentsmoderation: /tour dq, autodq, end etc.
 //     - tournamentsmanagement: enable/disable tournaments.
+//     - eztc: /eztc commands.
 exports.grouplist = [
 	{
 		symbol: '~',
@@ -243,7 +244,8 @@ exports.grouplist = [
 		potd: true,
 		disableladder: true,
 		globalonly: true,
-		tournamentsmanagement: true
+		tournamentsmanagement: true,
+		eztc: true
 	},
 	{
 		symbol: '#',
@@ -317,3 +319,21 @@ exports.grouplist = [
 		alts: 's'
 	}
 ];
+
+// Maximum number of concurrent connections a single ip may have
+exports.maxConnections = 5;
+
+// Whitelist to bypass the maximum number of concurrent connections
+exports.connectionWhitelist = {
+	'127.0.0.1': 20
+};
+
+// tellsexpiryage - how long an offline message remains in existence before being removed.
+// By default, 7 days
+exports.tellsexpiryage = 1000 * 60 * 60 * 24 * 7;
+
+// tellrank - the rank that offline messaging is available to. By default, available to voices
+// and above. Set to ' ' to allow all users to use offline messaging and `false` to disable
+// offline messaging completely. Set to `'autoconfirmed'` to allow only autoconfirmed users
+// to send offline messages.
+exports.tellrank = ' ';

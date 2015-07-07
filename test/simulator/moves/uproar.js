@@ -17,7 +17,7 @@ describe('Uproar', function () {
 	});
 });
 
-describe('Uproar [Gen 5]', function () {
+describe('Uproar - BW', function () {
 	afterEach(function () {
 		battle.destroy();
 	});

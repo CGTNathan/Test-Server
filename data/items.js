@@ -345,7 +345,7 @@ exports.BattleItems = {
 		},
 		num: 183,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"berryjuice": {
 		id: "berryjuice",
@@ -513,7 +513,7 @@ exports.BattleItems = {
 		},
 		num: 165,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"brightpowder": {
 		id: "brightpowder",
@@ -915,7 +915,7 @@ exports.BattleItems = {
 		},
 		num: 175,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"coverfossil": {
 		id: "coverfossil",
@@ -1176,7 +1176,7 @@ exports.BattleItems = {
 		},
 		num: 182,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"duskball": {
 		id: "duskball",
@@ -1245,7 +1245,7 @@ exports.BattleItems = {
 		spritenum: 120,
 		isGem: true,
 		onSourceTryPrimaryHit: function (target, source, move) {
-			if (target === source || move.category === 'Status' || move.id in {firepledge:1, grasspledge:1, waterpledge:1}) return;
+			if (target === source || move.category === 'Status') return;
 			if (move.type === 'Electric') {
 				if (source.useItem()) {
 					this.add('-enditem', source, 'Electric Gem', '[from] gem', '[move] ' + move.name);
@@ -1419,7 +1419,7 @@ exports.BattleItems = {
 		spritenum: 141,
 		isGem: true,
 		onSourceTryPrimaryHit: function (target, source, move) {
-			if (target === source || move.category === 'Status' || move.id in {firepledge:1, grasspledge:1, waterpledge:1}) return;
+			if (target === source || move.category === 'Status') return;
 			if (move.type === 'Fire') {
 				if (source.useItem()) {
 					this.add('-enditem', source, 'Fire Gem', '[from] gem', '[move] ' + move.name);
@@ -1699,7 +1699,7 @@ exports.BattleItems = {
 		spritenum: 172,
 		isGem: true,
 		onSourceTryPrimaryHit: function (target, source, move) {
-			if (target === source || move.category === 'Status' || move.id in {firepledge:1, grasspledge:1, waterpledge:1}) return;
+			if (target === source || move.category === 'Status') return;
 			if (move.type === 'Grass') {
 				if (source.useItem()) {
 					this.add('-enditem', source, 'Grass Gem', '[from] gem', '[move] ' + move.name);
@@ -1730,7 +1730,7 @@ exports.BattleItems = {
 		},
 		num: 173,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"gripclaw": {
 		id: "gripclaw",
@@ -1902,7 +1902,7 @@ exports.BattleItems = {
 		},
 		num: 172,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"houndoominite": {
 		id: "houndoominite",
@@ -2024,12 +2024,9 @@ exports.BattleItems = {
 		fling: {
 			basePower: 130
 		},
-		onEffectiveness: function (typeMod, target, type, move) {
-			if (target.volatiles['ingrain'] || target.volatiles['smackdown'] || this.getPseudoWeather('gravity')) return;
-			if (move.type === 'Ground' && !this.getImmunity(move.type, target)) return 0;
-		},
-		onNegateImmunity: function (pokemon, type) {
-			if (type === 'Ground') return false;
+		onModifyPokemon: function (pokemon) {
+			if (pokemon.negateImmunity['Ground']) return;
+			pokemon.negateImmunity['Ground'] = 'IgnoreEffectiveness';
 		},
 		onModifySpe: function (speMod) {
 			return this.chain(speMod, 0.5);
@@ -2133,7 +2130,7 @@ exports.BattleItems = {
 			basePower: 100,
 			type: "Fairy"
 		},
-		onAfterMoveSecondary: function (target, source, move) {
+		onAfterDamage: function (damage, target, source, move) {
 			if (move.category === 'Physical') {
 				target.eatItem();
 			}
@@ -2143,7 +2140,7 @@ exports.BattleItems = {
 		},
 		num: -6,
 		gen: 6,
-		desc: "Raises holder's Defense by 1 stage after it is hit by a physical attack. Single use."
+		desc: "Raises holder's Defense by 1 stage if hit by a physical attack. Single use."
 	},
 	"kelpsyberry": {
 		id: "kelpsyberry",
@@ -2156,7 +2153,7 @@ exports.BattleItems = {
 		},
 		num: 170,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"kangaskhanite": {
 		id: "kangaskhanite",
@@ -2369,11 +2366,18 @@ exports.BattleItems = {
 			basePower: 30
 		},
 		onModifyDamage: function (damage, source, target, move) {
-			return this.chainModify(1.3);
+			if (source) {
+				source.addVolatile('lifeorb');
+				return this.chainModify(1.3);
+			}
 		},
-		onAfterMoveSecondarySelf: function (source, target, move) {
-			if (source && source !== target && move && move.category !== 'Status' && !move.ohko) {
-				this.damage(source.maxhp / 10, source, source, this.getItem('lifeorb'));
+		effect: {
+			duration: 1,
+			onAfterMoveSecondarySelf: function (source, target, move) {
+				if (move && move.effectType === 'Move' && source && source.volatiles['lifeorb']) {
+					this.damage(source.maxhp / 10, source, source, this.getItem('lifeorb'));
+					source.removeVolatile('lifeorb');
+				}
 			}
 		},
 		num: 270,
@@ -2608,15 +2612,14 @@ exports.BattleItems = {
 		},
 		num: 176,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"mail": {
 		id: "mail",
 		name: "Mail",
 		spritenum: 403,
 		onTakeItem: function (item, source) {
-			if (!this.activeMove) return false;
-			if (this.activeMove.id !== 'knockoff' && this.activeMove.id !== 'thief' && this.activeMove.id !== 'covet') return false;
+			if (!this.activeMove || this.activeMove.id !== 'knockoff') return false;
 		},
 		isUnreleased: true,
 		gen: 2,
@@ -2645,7 +2648,7 @@ exports.BattleItems = {
 			basePower: 100,
 			type: "Dark"
 		},
-		onAfterMoveSecondary: function (target, source, move) {
+		onAfterDamage: function (damage, target, source, move) {
 			if (move.category === 'Special') {
 				target.eatItem();
 			}
@@ -2655,7 +2658,7 @@ exports.BattleItems = {
 		},
 		num: -6,
 		gen: 6,
-		desc: "Raises holder's Sp. Def by 1 stage after it is hit by a special attack. Single use."
+		desc: "Raises holder's Sp. Def by 1 stage if hit by a special attack. Single use."
 	},
 	"masterball": {
 		id: "masterball",
@@ -2726,9 +2729,6 @@ exports.BattleItems = {
 					if (pokemon.volatiles[conditions[i]]) {
 						for (var j = 0; j < conditions.length; j++) {
 							pokemon.removeVolatile(conditions[j]);
-							if (conditions[j] === 'attract') {
-								this.add('-end', pokemon, 'move: Attract', '[from] item: Mental Herb');
-							}
 						}
 						return;
 					}
@@ -2742,9 +2742,6 @@ exports.BattleItems = {
 					if (!pokemon.useItem()) return;
 					for (var j = 0; j < conditions.length; j++) {
 						pokemon.removeVolatile(conditions[j]);
-						if (conditions[j] === 'attract') {
-							this.add('-end', pokemon, 'move: Attract', '[from] item: Mental Herb');
-						}
 					}
 					return;
 				}
@@ -2989,7 +2986,7 @@ exports.BattleItems = {
 		},
 		num: 166,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"nestball": {
 		id: "nestball",
@@ -3035,7 +3032,7 @@ exports.BattleItems = {
 		},
 		num: 178,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"normalgem": {
 		id: "normalgem",
@@ -3043,7 +3040,7 @@ exports.BattleItems = {
 		spritenum: 307,
 		isGem: true,
 		onSourceTryPrimaryHit: function (target, source, move) {
-			if (target === source || move.category === 'Status' || move.id in {firepledge:1, grasspledge:1, waterpledge:1}) return;
+			if (target === source || move.category === 'Status') return;
 			if (move.type === 'Normal') {
 				if (source.useItem()) {
 					this.add('-enditem', source, 'Normal Gem', '[from] gem', '[move] ' + move.name);
@@ -3140,7 +3137,7 @@ exports.BattleItems = {
 		},
 		num: 180,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"parkball": {
 		id: "parkball",
@@ -3284,7 +3281,7 @@ exports.BattleItems = {
 		},
 		num: 168,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"pinsirite": {
 		id: "pinsirite",
@@ -3388,7 +3385,7 @@ exports.BattleItems = {
 		},
 		num: 169,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"powerherb": {
 		id: "powerherb",
@@ -3445,7 +3442,7 @@ exports.BattleItems = {
 		},
 		num: 171,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"quickball": {
 		id: "quickball",
@@ -3499,7 +3496,7 @@ exports.BattleItems = {
 		},
 		num: 177,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"rarebone": {
 		id: "rarebone",
@@ -3510,7 +3507,7 @@ exports.BattleItems = {
 		},
 		num: 106,
 		gen: 4,
-		desc: "No competitive use other than when used with Fling."
+		desc: "No competitive use."
 	},
 	"rawstberry": {
 		id: "rawstberry",
@@ -3584,7 +3581,7 @@ exports.BattleItems = {
 		},
 		num: 164,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"redcard": {
 		id: "redcard",
@@ -3669,8 +3666,8 @@ exports.BattleItems = {
 		fling: {
 			basePower: 10
 		},
-		onNegateImmunity: function (pokemon, type) {
-			if (type in this.data.TypeChart && this.runEvent('Immunity', pokemon, null, null, type)) return false;
+		onModifyPokemon: function (pokemon) {
+			pokemon.negateImmunity['Type'] = true;
 		},
 		num: 543,
 		gen: 5,
@@ -3991,7 +3988,7 @@ exports.BattleItems = {
 		},
 		onAfterMoveSecondarySelfPriority: -1,
 		onAfterMoveSecondarySelf: function (pokemon, target, move) {
-			if (move.category !== 'Status') {
+			if (move.category !== 'Status' && pokemon.lastDamage > 0) {
 				this.heal(pokemon.lastDamage / 8, pokemon);
 			}
 		},
@@ -4235,7 +4232,7 @@ exports.BattleItems = {
 		},
 		num: 179,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"splashplate": {
 		id: "splashplate",
@@ -4437,7 +4434,7 @@ exports.BattleItems = {
 		},
 		num: 174,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"tangaberry": {
 		id: "tangaberry",
@@ -4606,7 +4603,7 @@ exports.BattleItems = {
 		spritenum: 528,
 		isGem: true,
 		onSourceTryPrimaryHit: function (target, source, move) {
-			if (target === source || move.category === 'Status' || move.id in {firepledge:1, grasspledge:1, waterpledge:1}) return;
+			if (target === source || move.category === 'Status') return;
 			if (move.type === 'Water') {
 				if (source.useItem()) {
 					this.add('-enditem', source, 'Water Gem', '[from] gem', '[move] ' + move.name);
@@ -4629,7 +4626,7 @@ exports.BattleItems = {
 		},
 		num: 181,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"waveincense": {
 		id: "waveincense",
@@ -4675,7 +4672,7 @@ exports.BattleItems = {
 		},
 		num: 167,
 		gen: 3,
-		desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck."
+		desc: "No competitive use."
 	},
 	"whiteherb": {
 		id: "whiteherb",

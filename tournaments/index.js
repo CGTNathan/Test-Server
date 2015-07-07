@@ -134,7 +134,7 @@ Tournament = (function () {
 		this.update();
 		return true;
 	};
-	
+
 	Tournament.prototype.forceEnd = function () {
 		if (this.isTournamentStarted) {
 			this.inProgressMatches.forEach(function (match) {
@@ -752,15 +752,6 @@ var commands = {
 				tournament.removeUser(user, this);
 			}
 		},
-		size: function (tournament, user, params, cmd) {
-			if (params && params < 2) {
-				this.sendReply("You cannot have a player cap that is less than 2.");
-				return;
-			} else {
-				tournament.playerCap = params;
-				this.room.send('The tournament size has been set to ' + params + '.');
-			}
-		},
 		getusers: function (tournament) {
 			if (!this.canBroadcast()) return;
 			var users = usersToNames(tournament.generator.getUsers(true).sort());
@@ -850,6 +841,24 @@ var commands = {
 		runautodq: function (tournament) {
 			tournament.runAutoDisqualify(this);
 		},
+		remind: function (tournament, user) {
+			var users = tournament.generator.getAvailableMatches().toString().split(',');
+			var offlineUsers = [];
+			for (var u in users) {
+				var targetUser = Users.get(users[u]);
+				if (!targetUser) {
+					offlineUsers.push(users[u]);
+					continue;
+				} else if (!targetUser.connected) {
+					offlineUsers.push(targetUser.userid);
+					continue;
+				} else {
+					targetUser.popup('You have a tournament battle in the room "' + tournament.room.title + '". If you do not start soon you may be disqualified.');
+				}
+			}
+			tournament.room.addRaw('<b>Players have been reminded of their tournament battles by ' + user.name + '.</b>');
+			if (offlineUsers.length > 0 && offlineUsers !== '') tournament.room.addRaw('<b>The following users are currently offline: ' + offlineUsers + '.</b>');
+		},
 		end: 'delete',
 		stop: 'delete',
 		delete: function (tournament, user) {
@@ -879,7 +888,19 @@ CommandParser.commands.tournament = function (paramString, room, user) {
 			return {room: tournament.room.title, format: tournament.format, generator: tournament.generator.name, isStarted: tournament.isTournamentStarted};
 		})));
 	} else if (cmd === 'help') {
-		return this.parse('/help tournament');
+		if (!this.canBroadcast()) return;
+		return this.sendReplyBox(
+			"- create/new &lt;format>, &lt;type> [, &lt;comma-separated arguments>]: Creates a new tournament in the current room.<br />" +
+			"- settype &lt;type> [, &lt;comma-separated arguments>]: Modifies the type of tournament after it's been created, but before it has started.<br />" +
+			"- end/stop/delete: Forcibly ends the tournament in the current room.<br />" +
+			"- begin/start: Starts the tournament in the current room.<br />" +
+			"- dq/disqualify &lt;user>: Disqualifies a user.<br />" +
+			"- autodq/setautodq &lt;minutes|off>: Sets the automatic disqualification timeout.<br />" +
+			"- runautodq: Manually run the automatic disqualifier.<br />" +
+			"- getusers: Lists the users in the current tournament.<br />" +
+			"- on/off: Enables/disables allowing mods to start tournaments.<br />" +
+			"More detailed help can be found <a href=\"https://gist.github.com/verbiage/0846a552595349032fbe\">here</a>"
+		);
 	} else if (cmd === 'on' || cmd === 'enable') {
 		if (!this.can('tournamentsmanagement', null, room)) return;
 		if (room.toursEnabled) {
@@ -921,10 +942,6 @@ CommandParser.commands.tournament = function (paramString, room, user) {
 				var tourRoom = Rooms.search(Config.tourroom || 'tournaments');
 				if (tourRoom) tourRoom.addRaw('<div class="infobox"><a href="/' + room.id + '" class="ilink"><b>' + Tools.getFormat(tour.format).name + '</b> tournament created in <b>' + room.title + '</b>.</a></div>');
 			}
-			if (tour.format === 'ce') {
-				this.parse('/tour size 16')
-				this.sendReply('To change it, type "/tour size [#]".');
-			}
 		}
 	} else {
 		var tournament = getTournament(room.title);
@@ -961,21 +978,6 @@ CommandParser.commands.tournament = function (paramString, room, user) {
 			commandHandler.call(this, tournament, user, params, cmd);
 		}
 	}
-};
-CommandParser.commands.tournamenthelp = function (target, room, user) {
-	if (!this.canBroadcast()) return;
-	return this.sendReplyBox(
-		"- create/new &lt;format>, &lt;type> [, &lt;comma-separated arguments>]: Creates a new tournament in the current room.<br />" +
-		"- settype &lt;type> [, &lt;comma-separated arguments>]: Modifies the type of tournament after it's been created, but before it has started.<br />" +
-		"- end/stop/delete: Forcibly ends the tournament in the current room.<br />" +
-		"- begin/start: Starts the tournament in the current room.<br />" +
-		"- dq/disqualify &lt;user>: Disqualifies a user.<br />" +
-		"- autodq/setautodq &lt;minutes|off>: Sets the automatic disqualification timeout.<br />" +
-		"- runautodq: Manually run the automatic disqualifier.<br />" +
-		"- getusers: Lists the users in the current tournament.<br />" +
-		"- on/off: Enables/disables allowing mods to start tournaments.<br />" +
-		"More detailed help can be found <a href=\"https://gist.github.com/verbiage/0846a552595349032fbe\">here</a>"
-	);
 };
 
 exports.Tournament = Tournament;

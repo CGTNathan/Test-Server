@@ -118,11 +118,8 @@ if (!process.send) {
 	 * Otherwise, an empty string will be returned.
 	 */
 	global.toId = function (text) {
-		if (text && text.id) {
-			text = text.id;
-		} else if (text && text.userid) {
-			text = text.userid;
-		}
+		if (text && text.id) text = text.id;
+		else if (text && text.userid) text = text.userid;
 
 		return string(text).toLowerCase().replace(/[^a-z0-9]+/g, '');
 	};
@@ -173,20 +170,7 @@ if (!process.send) {
 		if (!validators[format]) validators[format] = new Validator(format);
 		var parsedTeam = [];
 		parsedTeam = Tools.fastUnpackTeam(message.substr(pipeIndex2 + 1));
-
-		var problems;
-		try {
-			problems = validators[format].validateTeam(parsedTeam);
-		} catch (err) {
-			var stack = err.stack + '\n\n' +
-					'Additional information:\n' +
-					'team = ' + message.substr(pipeIndex2 + 1) + '\n';
-			var fakeErr = {stack: stack};
-
-			require('./crashlogger.js')(fakeErr, 'A team validation');
-			problems = ["Your team crashed the team validator. We've been automatically notified and will fix this crash, but you should use a different team for now."];
-		}
-
+		var problems = validators[format].validateTeam(parsedTeam);
 		if (problems && problems.length) {
 			respond(id, false, problems.join('\n'));
 		} else {
@@ -227,17 +211,17 @@ Validator = (function () {
 			return ["Your team has more than 6 pokemon."];
 		}
 		switch (format.gameType) {
-		case 'doubles':
-			if (team.length < 2) return ["Your Doubles team needs at least 2 pokemon."];
-			break;
-		case 'triples':
-			if (team.length < 3) return ["Your Triples team needs at least 3 pokemon."];
-			break;
-		case 'rotation':
-			if (team.length < 3) return ["Your Rotation team needs at least 3 pokemon."];
-			break;
-		default:
-			if (team.length < 1) return ["Your team has no pokemon."];
+			case 'doubles':
+				if (team.length < 2) return ["Your Doubles team needs at least 2 pokemon."];
+				break;
+			case 'triples':
+				if (team.length < 3) return ["Your Triples team needs at least 3 pokemon."];
+				break;
+			case 'rotation':
+				if (team.length < 3) return ["Your Rotation team needs at least 3 pokemon."];
+				break;
+			default:
+				if (team.length < 1) return ["Your team has no pokemon."];
 		}
 		var teamHas = {};
 		for (var i = 0; i < team.length; i++) {
@@ -703,7 +687,6 @@ Validator = (function () {
 														// We have to test here that the father of both moves doesn't get both by egg breeding
 														var learnsFrom = false;
 														var lsetToCheck = (dexEntry.learnset[lsetData.hasEggMove]) ? dexEntry.learnset[lsetData.hasEggMove] : dexEntry.learnset['sketch'];
-														if (!lsetToCheck || !lsetToCheck.length) continue;
 														for (var ltype = 0; ltype < lsetToCheck.length; ltype++) {
 															// Save first learning type. After that, only save it if we have egg and it's not egg.
 															learnsFrom = !learnsFrom || learnsFrom === 'E' ? lsetToCheck[ltype].charAt(1) : learnsFrom;

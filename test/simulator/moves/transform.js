@@ -111,7 +111,7 @@ describe('Transform', function () {
 	});
 });
 
-describe('Transform [Gen 4]', function () {
+describe('Transform - DPP', function () {
 	afterEach(function () {
 		battle.destroy();
 	});

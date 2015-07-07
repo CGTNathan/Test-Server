@@ -64,7 +64,7 @@ describe('Heal Block', function () {
 	});
 });
 
-describe('Heal Block [Gen 5]', function () {
+describe('Heal Block - BW', function () {
 	afterEach(function () {
 		battle.destroy();
 	});
@@ -136,7 +136,7 @@ describe('Heal Block [Gen 5]', function () {
 	});
 });
 
-describe('Heal Block [Gen 4]', function () {
+describe('Heal Block - DPPt', function () {
 	afterEach(function () {
 		battle.destroy();
 	});

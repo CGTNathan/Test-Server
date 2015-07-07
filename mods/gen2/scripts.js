@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Gen 2 scripts.
  */
 exports.BattleScripts = {
@@ -104,7 +104,7 @@ exports.BattleScripts = {
 		}
 		pokemon.moveUsed(move);
 		this.useMove(move, pokemon, target, sourceEffect);
-		this.singleEvent('AfterMove', move, null, pokemon, target, move);
+		this.runEvent('AfterMove', target, pokemon, move);
 		if (!move.selfSwitch && target.hp > 0) this.runEvent('AfterMoveSelf', pokemon, target, move);
 	},
 	moveHit: function (target, pokemon, move, moveData, isSecondary, isSelf) {
@@ -157,6 +157,7 @@ exports.BattleScripts = {
 				didSomething = true;
 			}
 			if (damage === false || damage === null) {
+
 				if (damage === false && !isSecondary && !isSelf) {
 					this.add('-fail', target);
 				}
@@ -350,7 +351,7 @@ exports.BattleScripts = {
 
 		// Happens after crit calculation
 		if (basePower) {
-			basePower = this.runEvent('BasePower', pokemon, target, move, basePower, true);
+			basePower = this.runEvent('BasePower', pokemon, target, move, basePower);
 			if (move.basePowerModifier) {
 				basePower *= move.basePowerModifier;
 			}

@@ -3,6 +3,9 @@
 /node_modules
 /gulp-cache
 npm-debug.log
+infinite/mongo.js
+chat-plugins/leagueauth.js
+
 
 # boilerplate #
 ###############
@@ -12,7 +15,9 @@ npm-debug.log
 # editor temp files
 *~
 .idea/
-
+/static/
+/static/*
+/static/**/*
 tmp/**/*
 *.lock
 *.DS_Store

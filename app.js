@@ -154,11 +154,8 @@ global.ResourceMonitor = {
 				this.log('[ResourceMonitor] IP ' + ip + ' has been banned for connection flooding (' + this.connections[ip] + ' times in the last ' + duration.duration() + name + ')');
 				return true;
 			} else if (this.connections[ip] > 500) {
-				if (this.connections[ip] % 500 === 0) {
-					var c = this.connections[ip] / 500;
-					if (c < 5 || c % 2 === 0 && c < 10 || c % 5 === 0) {
-						this.log('[ResourceMonitor] Banned IP ' + ip + ' has connected ' + this.connections[ip] + ' times in the last ' + duration.duration() + name);
-					}
+				if (this.connections[ip] % 250 === 0) {
+					this.log('[ResourceMonitor] Banned IP ' + ip + ' has connected ' + this.connections[ip] + ' times in the last ' + duration.duration() + name);
 				}
 				return true;
 			}
@@ -235,13 +232,10 @@ global.ResourceMonitor = {
 
 		while (stack.length) {
 			var value = stack.pop();
-			if (typeof value === 'boolean') {
-				bytes += 4;
-			} else if (typeof value === 'string') {
-				bytes += value.length * 2;
-			} else if (typeof value === 'number') {
-				bytes += 8;
-			} else if (typeof value === 'object' && objectList.indexOf(value) < 0) {
+			if (typeof value === 'boolean') bytes += 4;
+			else if (typeof value === 'string') bytes += value.length * 2;
+			else if (typeof value === 'number') bytes += 8;
+			else if (typeof value === 'object' && objectList.indexOf(value) < 0) {
 				objectList.push(value);
 				for (var i in value) stack.push(value[i]);
 			}
@@ -298,11 +292,8 @@ global.ResourceMonitor = {
  * Otherwise, an empty string will be returned.
  */
 global.toId = function (text) {
-	if (text && text.id) {
-		text = text.id;
-	} else if (text && text.userid) {
-		text = text.userid;
-	}
+	if (text && text.id) text = text.id;
+	else if (text && text.userid) text = text.userid;
 
 	return string(text).toLowerCase().replace(/[^a-z0-9]+/g, '');
 };
@@ -372,7 +363,7 @@ if (Config.crashguard) {
 	var lastCrash = 0;
 	process.on('uncaughtException', function (err) {
 		var dateNow = Date.now();
-		var quietCrash = require('./crashlogger.js')(err, 'The main process');
+		var quietCrash = require('./infinite/override/crashlogger.js')(err, 'The main process');
 		quietCrash = quietCrash || ((dateNow - lastCrash) <= 1000 * 60 * 5);
 		lastCrash = Date.now();
 		if (quietCrash) return;
@@ -429,3 +420,25 @@ fs.readFile(path.resolve(__dirname, 'config/ipbans.txt'), function (err, data) {
  *********************************************************/
 
 require('./repl.js').start('app', function (cmd) { return eval(cmd); });
+
+/*********************************************************
+ * Load up Infinite specific modules
+ *********************************************************/
+
+require('./infinite/mongo').connect();
+
+global.Poll = require('./infinite/poll');
+
+global.Spamroom = require('./spamroom.js');
+
+global.Tells = require('./tells.js');
+
+require('./infinite/emoticons').enableEmoticons();
+
+fs.readdirSync('./infinite/override').forEach(function (file) {
+	if (file.substr(-3) === '.js') require('./infinite/override/' + file);
+});
+
+fs.readdirSync('./infinite/commands').forEach(function (file) {
+	if (file.substr(-3) === '.js') Object.merge(CommandParser.commands, require('./infinite/commands/' + file));
+});

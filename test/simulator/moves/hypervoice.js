@@ -17,7 +17,7 @@ describe('Hyper Voice', function () {
 	});
 });
 
-describe('Hyper Voice [Gen 5]', function () {
+describe('Hyper Voice - BW', function () {
 	afterEach(function () {
 		battle.destroy();
 	});

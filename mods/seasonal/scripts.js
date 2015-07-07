@@ -210,17 +210,11 @@ exports.BattleScripts = {
 		var ignoreNegativeOffensive = !!move.ignoreNegativeOffensive;
 		var ignorePositiveDefensive = !!move.ignorePositiveDefensive;
 
-		if (move.useTargetOffensive) {
-			attack = defender.calculateStat(attackStat, atkBoosts);
-		} else {
-			attack = attacker.calculateStat(attackStat, atkBoosts);
-		}
+		if (move.useTargetOffensive) attack = defender.calculateStat(attackStat, atkBoosts);
+		else attack = attacker.calculateStat(attackStat, atkBoosts);
 
-		if (move.useSourceDefensive) {
-			defense = attacker.calculateStat(defenseStat, defBoosts);
-		} else {
-			defense = defender.calculateStat(defenseStat, defBoosts);
-		}
+		if (move.useSourceDefensive) defense = attacker.calculateStat(defenseStat, defBoosts);
+		else defense = defender.calculateStat(defenseStat, defBoosts);
 
 		// Apply Stat Modifiers
 		attack = this.runEvent('Modify' + statTable[attackStat], attacker, defender, move, attack);

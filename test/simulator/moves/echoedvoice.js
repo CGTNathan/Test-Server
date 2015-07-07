@@ -17,7 +17,7 @@ describe('Echoed Voice', function () {
 	});
 });
 
-describe('Echoed Voice [Gen 5]', function () {
+describe('Echoed Voice - BW', function () {
 	afterEach(function () {
 		battle.destroy();
 	});

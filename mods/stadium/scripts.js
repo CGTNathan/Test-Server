@@ -87,7 +87,7 @@ exports.BattleScripts = {
 			pokemon.deductPP(move, null, target);
 		}
 		this.useMove(move, pokemon, target, sourceEffect);
-		this.singleEvent('AfterMove', move, null, pokemon, target, move);
+		this.runEvent('AfterMove', target, pokemon, move);
 
 		// If rival fainted
 		if (target.hp <= 0) {
